@@ -1,5 +1,7 @@
 const nodeMailer = require("nodemailer");
 
+require("dotenv").config();
+
 exports.contactUs = async (req, res) => {
   const {
     firstName,
@@ -23,15 +25,15 @@ exports.contactUs = async (req, res) => {
     const transporter = nodeMailer.createTransport({
       service: "gmail",
       auth: {
-        user: "shiavnshupanwar19@gmail.com", // Replace with your email,
-        pass: "fbez wjez fwlp bnxo", // Replace with your password or app-specific password
+        user: process.env.EMAIL_USER, // Replace with your email,
+        pass: process.env.EMAIL_PASS, // Replace with your password or app-specific password
       },
     });
 
     // Email options
 
     const mailOptions = {
-      form: businessEmail,
+      from: businessEmail,
       to: "shiavnshupanwar19@gmail.com", // Replace with your email
       subject: `Contact Form Submission from ${companyName}`,
       text: `First Name : ${firstName}\nLast Name: ${lastName}\nCompany Name: ${companyName}\nBussiness Email: ${businessEmail}\nPhone Number : ${phoneNumber}\nCountry : ${country}\n\nMessage : \n${message}`,
@@ -47,6 +49,7 @@ exports.contactUs = async (req, res) => {
       message: "Message sent successfully",
     });
   } catch (error) {
+    console.error("Error in sending email:", error);
     return res.status(500).json({
       success: false,
       message: "Error in sending email",
