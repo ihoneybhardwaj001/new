@@ -10,6 +10,8 @@ const leaveRoute = require("./routes/leaveRoute");
 
 const assetRoute = require("./routes/assetRoute");
 
+const contactUsRoute = require("./routes/contactUsRoute");
+
 const app = express();
 
 require("./config/db");
@@ -26,6 +28,8 @@ app.use("/api/user", userRoute);
 app.use("/api/leave", leaveRoute);
 
 app.use("/api/asset", assetRoute);
+
+app.use("/api/contactUs", contactUsRoute);
 
 app.listen(port, () => {
   console.log("Server running on Port 2024");
