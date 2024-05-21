@@ -42,6 +42,14 @@ const User = sequelize.define(
       type: DataTypes.DATEONLY,
     },
 
+    aadhaar_number: {
+      type: DataTypes.STRING,
+    },
+
+    pan_number: {
+      type: DataTypes.STRING,
+    },
+
     permanentAddress: {
       type: DataTypes.STRING,
     },
