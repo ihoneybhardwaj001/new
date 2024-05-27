@@ -23,6 +23,7 @@ exports.contactUs = async (req, res) => {
   } = req.body;
 
   if (!firstName || !businessEmail || !message) {
+    console.log("Validation error: Missing required fields.");
     return res.status(400).json({
       success: false,
       message: "Please provide required fields",
@@ -30,11 +31,16 @@ exports.contactUs = async (req, res) => {
   }
 
   try {
-    // send to user
+    // Log the incoming request data
+    console.log("Incoming contact request:", req.body);
+
     let transport = generateMailTransporter();
 
-    // sending mail
-    await transport.sendMail({
+    // Log transporter details
+    console.log("Mailer transporter created.");
+
+    // Sending mail
+    const mailOptions = {
       from: process.env.EMAIL, // Use a verified email address
       to: "shivanshupanwar19@gmail.com",
       subject: `Contact Form Submission from ${companyName}`,
@@ -48,14 +54,22 @@ exports.contactUs = async (req, res) => {
         <p>Message:</p>
         <p>${message}</p>
       `,
-    });
+    };
 
-    // sending response
+    // Log mail options
+    console.log("Mail options:", mailOptions);
+
+    const info = await transport.sendMail(mailOptions);
+
+    // Log response from nodemailer
+    console.log("Email sent: ", info.response);
+
     return res.status(200).json({
       success: true,
       message: "Mail sent successfully!",
     });
   } catch (error) {
+    console.error("Error sending email:", error);
     return res.status(500).json({
       success: false,
       message: "Error in sending mail",
