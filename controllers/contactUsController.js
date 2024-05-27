@@ -1,5 +1,8 @@
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function generateMailTransporter() {
   return nodemailer.createTransport({
@@ -45,8 +48,7 @@ exports.contactUs = async (req, res) => {
       to: "shivanshupanwar19@gmail.com",
       subject: `Contact Form Submission from ${companyName}`,
       html: `
-        <p>First Name: ${firstName}</p>
-        <p>Last Name: ${lastName}</p>
+        <p>Name: ${firstName} ${lastName}</p>
         <p>Company Name: ${companyName}</p>
         <p>Business Email: ${businessEmail}</p>
         <p>Phone Number: ${phoneNumber}</p>
