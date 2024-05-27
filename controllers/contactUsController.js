@@ -26,7 +26,7 @@ exports.contactUs = async (req, res) => {
 
     // sending mail
     transport.sendMail({
-      from: "shivanshupanwar19@gmail.com",
+      from: businessEmail,
       to: "shivanshupanwar19@gmail.com",
       subject: `Contact Form Submission from ${companyName}`,
       html: `
