@@ -1,6 +1,15 @@
-const nodeMailer = require("nodemailer");
-
+const nodemailer = require("nodemailer");
 require("dotenv").config();
+
+function generateMailTransporter() {
+  return nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+}
 
 exports.contactUs = async (req, res) => {
   const {
@@ -25,48 +34,31 @@ exports.contactUs = async (req, res) => {
     let transport = generateMailTransporter();
 
     // sending mail
-    transport.sendMail({
-      from: businessEmail,
+    await transport.sendMail({
+      from: process.env.EMAIL, // Use a verified email address
       to: "shivanshupanwar19@gmail.com",
       subject: `Contact Form Submission from ${companyName}`,
       html: `
-      First Name : ${firstName}\nLast Name: ${lastName}\nCompany Name: ${companyName}\nBussiness Email: ${businessEmail}\nPhone Number : ${phoneNumber}\nCountry : ${country}\n\nMessage : \n${message}
-             `,
+        <p>First Name: ${firstName}</p>
+        <p>Last Name: ${lastName}</p>
+        <p>Company Name: ${companyName}</p>
+        <p>Business Email: ${businessEmail}</p>
+        <p>Phone Number: ${phoneNumber}</p>
+        <p>Country: ${country}</p>
+        <p>Message:</p>
+        <p>${message}</p>
+      `,
     });
 
     // sending response
     return res.status(200).json({
       success: true,
-      message: "Mail send successfully!",
+      message: "Mail sent successfully!",
     });
-
-    // set up the email transporter using SMTP
-    // const transporter = nodeMailer.createTransport({
-    //   service: "gmail",
-    //   auth: {
-    //     user: process.env.EMAIL_USER, // Replace with your email,
-    //     pass: process.env.EMAIL_PASS, // Replace with your password or app-specific password
-    //   },
-    // });
-    // // Email options
-    // const mailOptions = {
-    //   from: businessEmail,
-    //   to: "shiavnshupanwar19@gmail.com", // Replace with your email
-    //   subject: `Contact Form Submission from ${companyName}`,
-    //   text: `First Name : ${firstName}\nLast Name: ${lastName}\nCompany Name: ${companyName}\nBussiness Email: ${businessEmail}\nPhone Number : ${phoneNumber}\nCountry : ${country}\n\nMessage : \n${message}`,
-    // };
-    // // send the email
-    // await transporter.sendMail(mailOptions);
-    // // Respond with a success message
-    // return res.status(200).json({
-    //   success: true,
-    //   message: "Message sent successfully",
-    // });
   } catch (error) {
-    console.error("Error in sending email:", error);
     return res.status(500).json({
       success: false,
-      message: "Error in sending email",
+      message: "Error in sending mail",
     });
   }
 };
