@@ -69,31 +69,3 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
-
-exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    // check email is present or not
-    if (!email) {
-      return res.status(401).json({
-        success: false,
-        message: "Email is missing",
-      });
-    }
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "USer is not present",
-      });
-    }
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while forgot password",
-    });
-  }
-};
