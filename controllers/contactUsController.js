@@ -3,7 +3,10 @@ require("dotenv").config();
 
 function generateMailTransporter() {
   return nodemailer.createTransport({
-    service: "MAIL",
+    host: process.env.SMTP_HOST, // Your mail server host, e.g., 'mail.systaldyn.in'
+    port: parseInt(process.env.SMTP_PORT, 10) || 465, // SMTP port, usually 587 for TLS or 465 for SSL
+    secure: true, // process.env.SMTP_PORT == "465", Use SSL for port 465
+    // service: "GMAIL",
     auth: {
       user: process.env.EMAIL,
       pass: process.env.EMAIL_PASSWORD,
