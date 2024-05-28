@@ -45,7 +45,7 @@ exports.contactUs = async (req, res) => {
     // Sending mail
     const mailOptions = {
       from: process.env.EMAIL, // Use a verified email address
-      to: "shivanshupanwar19@gmail.com",
+      to: "info@systaldyn.in",
       subject: `Contact Form Submission from ${companyName}`,
       html: `
         <p>Name: ${firstName} ${lastName}</p>
