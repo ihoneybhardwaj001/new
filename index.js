@@ -14,8 +14,8 @@ const app = express();
 
 require("./config/db");
 
-const httpsPort = process.env.HTTPS_PORT || 443;
-const httpPort = process.env.HTTP_PORT || 80;
+// const httpsPort = process.env.HTTPS_PORT || 443;
+// const httpPort = process.env.HTTP_PORT || 81;
 
 // Enable CORS
 app.use(cors());
@@ -35,22 +35,35 @@ app.use("/api/contactUs", contactUsRoute);
 //   // ca: fs.readFileSync("/path/to/your/chain.pem")
 // };
 
-// HTTPS server
-https.createServer(options, app).listen(httpsPort, () => {
-  console.log(`HTTPS Server running on port ${httpsPort}`);
+const options = {
+  key: fs.readFileSync(
+    "/home/systaldyn.in/public_html/systaldyn-backend/cert/key.pem"
+  ),
+  cert: fs.readFileSync(
+    "/home/systaldyn.in/public_html/systaldyn-backend/cert#/cert.pem"
+  ),
+};
+
+https.createServer(options, app).listen(443, () => {
+  console.log("Server running on port 443");
 });
 
+// HTTPS server
+// https.createServer(options, app).listen(httpsPort, () => {
+//   console.log(`HTTPS Server running on port ${httpsPort}`);
+// });
+
 // Optional: Redirect HTTP to HTTPS
-http
-  .createServer((req, res) => {
-    res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
-    res.end();
-  })
-  .listen(httpPort, () => {
-    console.log(
-      `HTTP Server running on port ${httpPort} and redirecting to HTTPS`
-    );
-  });
+// http
+//   .createServer((req, res) => {
+//     res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+//     res.end();
+//   })
+//   .listen(httpPort, () => {
+//     console.log(
+//       `HTTP Server running on port ${httpPort} and redirecting to HTTPS`
+//     );
+//   });
 
 // const express = require("express");
 
