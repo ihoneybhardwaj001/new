@@ -16,7 +16,7 @@ const app = express();
 
 require("./config/db");
 
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 2024;
 
 // Enable CORS
 app.use(cors());
@@ -32,5 +32,5 @@ app.use("/api/asset", assetRoute);
 app.use("/api/contactUs", contactUsRoute);
 
 app.listen(port, () => {
-  console.log("Server running on Port 443");
+  console.log("Server running on Port 2024");
 });
