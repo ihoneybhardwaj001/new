@@ -1,6 +1,6 @@
 const express = require("express");
-const fs = require("fs");
-const https = require("https");
+// const fs = require("fs");
+// const https = require("https");
 const cors = require("cors");
 require("dotenv").config();
 const userRoute = require("./routes/userRoute");
@@ -11,14 +11,13 @@ const contactUsRoute = require("./routes/contactUsRoute");
 const app = express();
 require("./config/db");
 
-// const port = process.env.PORT || 6001;
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 6001;
 
 // SSL/TLS certificates
-const options = {
-  key: fs.readFileSync("C:/Users/asus/key.pem"),
-  cert: fs.readFileSync("C:/Users/asus/cert.pem"),
-};
+// const options = {
+//   key: fs.readFileSync("C:/Users/asus/key.pem"),
+//   cert: fs.readFileSync("C:/Users/asus/cert.pem"),
+// };
 
 // Middleware to check the origin of incoming requests
 // const allowOnlyFromFrontend = (req, res, next) => {
@@ -55,14 +54,14 @@ app.use("/api/leave", leaveRoute);
 app.use("/api/asset", assetRoute);
 app.use("/api/contactUs", contactUsRoute);
 
-// app.listen(port, () => {
-//   console.log("Server running on Port 6001");
-// });
+app.listen(port, () => {
+  console.log("Server running on Port 6001");
+});
 
 // HTTPS server
-https.createServer(options, app).listen(port, () => {
-  console.log(`Server running on https://localhost:${port}`);
-});
+// https.createServer(options, app).listen(port, () => {
+//   console.log(`Server running on https://localhost:${port}`);
+// });
 
 // const express = require("express");
 
