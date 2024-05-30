@@ -11,7 +11,7 @@ const contactUsRoute = require("./routes/contactUsRoute");
 const app = express();
 require("./config/db");
 
-const port = process.env.PORT || 6001;
+const port = process.env.PORT || 3002;
 
 // SSL/TLS certificates
 // const options = {
@@ -59,7 +59,7 @@ app.use("/api/asset", assetRoute);
 app.use("/api/contactUs", contactUsRoute);
 
 app.listen(port, () => {
-  console.log("Server running on Port 6001");
+  console.log("Server running on Port 3002");
 });
 
 // HTTPS server
