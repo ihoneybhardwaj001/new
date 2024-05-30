@@ -49,6 +49,10 @@ app.use(express.json());
 // Enable CORS
 app.use(cors());
 
+app.use("/", (req, res) => {
+  return res.json({ success: false, message: "Running" });
+});
+
 app.use("/api/user", userRoute);
 app.use("/api/leave", leaveRoute);
 app.use("/api/asset", assetRoute);
